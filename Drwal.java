@@ -131,7 +131,7 @@ public class Drwal {
         }
         bufferedReader.close();
 
-        myArray =  fillContour(yStart, xStart, myArray, kolor);
+        myArray =  fillContour(yStart-1, xStart-1, myArray, kolor);
         display(myArray);
     }
 }
