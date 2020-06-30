@@ -75,7 +75,7 @@ public class Drwal {
             }
             else
             {
-                System.err.print("klops dolny");
+                System.err.print("klops");
                 System.exit(0);
             }
 
