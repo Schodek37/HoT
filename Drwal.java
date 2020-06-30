@@ -1,10 +1,10 @@
 import java.awt.*;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.Queue;
+
 
 public class Drwal {
 
@@ -20,45 +20,82 @@ public class Drwal {
         }
     }
 
-    public static char[][] fillContour(int xStart , int yStart, char[][] myArray, char kolor ) {
+    public static char[][] fillContour(int xStart , int yStart, char[][] myArray, char kolor, int wysokosc, int szerokosc) {
 
+        //xstart to numer wiersza
+        //ystart to numer kolumny
         int x, y;
         Queue<Point> stack = new ArrayDeque<>();
-        stack.add(new Point(xStart, yStart));
-        myArray[xStart][yStart] = kolor;
+        if(xStart > 0 && yStart > 0 && myArray[xStart][yStart] == ' ')
+        {
+            stack.add(new Point(xStart, yStart));
+            myArray[xStart][yStart] = kolor;
+        }
+        else
+        {
+            System.err.println("klops");
+            System.exit(0);
+        }
 
         while(stack.peek() != null)
         {
             Point p = stack.peek();
             x = (int) p.getX();
             y = (int) p.getY();
-            if(myArray[x][y+1] == ' ')
+
+            if(y+1<szerokosc)
             {
-                myArray[x][y+1] = kolor;
-                stack.add(new Point(x,y+1));
+                if(myArray[x][y+1] == ' ')
+                {
+                    myArray[x][y + 1] = kolor;
+                    stack.add(new Point(x, y + 1));
+                }
             }
-            if(myArray[x][y-1] == ' ')
+            else
             {
-                myArray[x][y-1] = kolor;
-                stack.add(new Point(x,y-1));
-            }
-            if(myArray[x+1][y] == ' ')
-            {
-                myArray[x+1][y] = kolor;
-                stack.add(new Point(x+1,y));
-            }
-            if(myArray[x-1][y] == ' ')
-            {
-                myArray[x-1][y] = kolor;
-                stack.add(new Point(x-1,y));
+                System.err.println("klops");
+                System.exit(0);
             }
 
-        stack.remove();
+
+
+            if(x+1<wysokosc)
+            {
+                if(myArray[x+1][y] == ' ')
+                {
+                    myArray[x + 1][y] = kolor;
+                    stack.add(new Point(x + 1, y));
+                }
+                if(myArray[x+1][y] == '\0')
+                {
+                    System.err.println("klops");
+                    System.exit(0);
+                }
+
+            }
+            else
+            {
+                System.err.print("klops dolny");
+                System.exit(0);
+            }
+
+            if(y>0)
+                if(myArray[x][y-1] == ' ')
+                {
+                    myArray[x][y - 1] = kolor;
+                    stack.add(new Point(x, y - 1));
+                }
+
+            if(x>0)
+                if(myArray[x-1][y] == ' ' && x>0)
+                {
+                    myArray[x-1][y] = kolor;
+                    stack.add(new Point(x-1,y));
+                }
+
+            stack.remove();
 
         }
-
-
-
         return myArray;
     }
 
@@ -109,31 +146,32 @@ public class Drwal {
             System.err.println("klops");
             System.exit(0); 
         }    
-
+        
 
         char[][] myArray = new char[wysokosc][szerokosc];        
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         int i = 0 ;
-        int zakres = 0;
-        String line = "";
+        int zakres =0;
+        String line;
+        int rows =0;
         while((line = bufferedReader.readLine()) != null) {
-
+            rows++;
             if(line.length() < szerokosc)
-                zakres=line.length();
+                   zakres=line.length();
             else
-                zakres=szerokosc;
+                    zakres=szerokosc;
 
              for (int j=0; j<zakres; j++)
             {
-                myArray[i][j] = line.charAt(j);
+                    myArray[i][j] = line.charAt(j);
             }
 
             i++;
-            if(i>wysokosc-1) break;
+             if(i>wysokosc-1) break;
         }
         bufferedReader.close();
-
-        myArray =  fillContour(yStart-1, xStart-1, myArray, kolor);
+        if(rows<wysokosc) wysokosc=rows;
+        myArray =  fillContour(yStart-1, xStart-1, myArray, kolor, wysokosc, szerokosc);
         display(myArray);
     }
 }
