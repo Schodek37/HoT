@@ -108,14 +108,7 @@ public class Drwal {
         {   
             System.err.println("klops");
             System.exit(0); 
-        }
-
-        File file = new File(String.valueOf(System.in));
-        if (file.length() == 0)
-        {
-            System.err.println("klops");
-            System.exit(0); 
-        }
+        }    
 
 
         char[][] myArray = new char[wysokosc][szerokosc];        
@@ -144,4 +137,3 @@ public class Drwal {
         display(myArray);
     }
 }
-
