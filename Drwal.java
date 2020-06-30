@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
@@ -108,6 +109,14 @@ public class Drwal {
             System.err.println("klops");
             System.exit(0); 
         }
+
+        File file = new File(String.valueOf(System.in));
+        if (file.length() == 0)
+        {
+            System.err.println("klops");
+            System.exit(0); 
+        }
+
 
         char[][] myArray = new char[wysokosc][szerokosc];        
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
