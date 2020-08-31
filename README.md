@@ -1,2 +1,2 @@
 # HoT
-House of Talents - zadania
+House of Talents #5 - zadania
